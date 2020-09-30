@@ -13,6 +13,7 @@ public class MongoDbRepository : IRepository
         MongoClient mongoClient = new MongoClient("mongodb://localhost:27017");
         var database = mongoClient.GetDatabase("game");
         _playerCollection = database.GetCollection<Player>("players");
+
         _bsonDocumentCollection = database.GetCollection<BsonDocument>("players");
     }
     public async Task<Player> Create(Player player)
@@ -142,15 +143,6 @@ public class MongoDbRepository : IRepository
         return players;
     }
 
-    public async Task<List<Player>> Sorting()
-    {
-        SortDefinition<Player> sortDef = Builders<Player>.Sort.Ascending("Score");
-        IFindFluent<Player, Player> cursor = _playerCollection.Find("").Sort(sortDef).Limit(10);
-        List<Player> players = await cursor.ToListAsync();
-
-        return players;
-    }
-
     public async Task<Player> SelectorMatching(string playerName)
     {
         var filter = Builders<Player>.Filter.Eq(player => player.Name, playerName);
@@ -165,5 +157,24 @@ public class MongoDbRepository : IRepository
         var playersWithWeapons = Builders<Player>.Filter.ElemMatch<Item>(p => p.itemList, Builders<Item>.Filter.Eq(item => item.type, itemType));
 
         return await _playerCollection.Find(playersWithWeapons).ToListAsync();
+    }
+
+    public async Task<List<Player>> Sorting()
+    {
+        SortDefinition<Player> sortDef = Builders<Player>.Sort.Ascending("Score");
+        IFindFluent<Player, Player> cursor = _playerCollection.Find("").Sort(sortDef).Limit(10);
+        List<Player> players = await cursor.ToListAsync();
+
+        return players;
+    }
+
+    public Task<Player> PopAndIncrement(Guid playerId, Guid itemId, int score)
+    {
+        var pull = Builders<Player>.Update.PullFilter(p => p.itemList, i => i.itemId == itemId);
+        var inc = Builders<Player>.Update.Inc(p => p.Score, score);
+        var update = Builders<Player>.Update.Combine(pull, inc);
+        var filter = Builders<Player>.Filter.Eq(p => p.Id, playerId);
+
+        return _playerCollection.FindOneAndUpdateAsync(filter, update);
     }
 }

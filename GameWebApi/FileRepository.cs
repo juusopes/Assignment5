@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using MongoDB.Driver;
 
 public class PlayerListHolder
 {
@@ -46,6 +47,7 @@ public class FileRepository : IRepository
     {
         PlayerListHolder players = await ReadFile();
         Item itemToGet = new Item();
+
         for (int i = 0; i < players.playerList.Count; i++)
         {
             if (players.playerList[i].Id == playerId)
@@ -207,21 +209,37 @@ public class FileRepository : IRepository
 
     public async Task<List<Player>> Ranges(int points)
     {
+        PlayerListHolder players = await ReadFile();
         return null;
     }
 
     public async Task<List<Player>> Sorting()
     {
+        PlayerListHolder players = await ReadFile();
+        // var filters = Builders<Player>.Filter.Gte(players => players.Level, 19) & Builders<Player>.Filter.Lte(players => players.Level, 30);
+        // var players = await ReadFile.Find(filter).ToListAsync();
+
+
+
         return null;
+        // return players.ToArray();
     }
 
     public async Task<Player> SelectorMatching(string playerName)
     {
+        PlayerListHolder players = await ReadFile();
         return null;
     }
 
     public async Task<List<Player>> SubDoc(ItemType itemType)
     {
+        PlayerListHolder players = await ReadFile();
+        return null;
+    }
+
+    public async Task<List<Player>> PopAndIncrement(ItemType itemType)
+    {
+        PlayerListHolder players = await ReadFile();
         return null;
     }
 }
