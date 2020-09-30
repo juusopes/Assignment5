@@ -13,3 +13,4 @@ namespace GameWebApi
         public string Summary { get; set; }
     }
 }
+
