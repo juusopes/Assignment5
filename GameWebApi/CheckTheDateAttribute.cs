@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class CheckTheDateAttribute : ValidationAttribute
 {
+    
     public string GetErrorMessage() =>
         "Select another date.";
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 public class ErrorHandlingMiddleware
 {
+    
     private readonly RequestDelegate _next;
 
     public ErrorHandlingMiddleware(RequestDelegate next)
