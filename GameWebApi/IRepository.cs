@@ -16,7 +16,8 @@ public interface IRepository
     Task<Item> UpdateItem(Guid playerId, Guid itemId, ModifiedItem item);
     Task<Item> DeleteItem(Guid playerId, Guid itemId);
     Task<List<Player>> Ranges(int points);
-    Task<List<Player>> Sorting();
     Task<Player> SelectorMatching(string playerName);
     Task<List<Player>> SubDoc(ItemType itemType);
+    Task<List<Player>> Sorting();
+    Task<Player> PopAndIncrement(Guid playerId, Guid itemId, int score);
 }

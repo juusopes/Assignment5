@@ -237,7 +237,7 @@ public class FileRepository : IRepository
         return null;
     }
 
-    public async Task<List<Player>> PopAndIncrement(ItemType itemType)
+    public async Task<Player> PopAndIncrement(Guid playerId, Guid itemId, int score)
     {
         PlayerListHolder players = await ReadFile();
         return null;

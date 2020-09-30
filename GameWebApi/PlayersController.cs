@@ -86,5 +86,12 @@ namespace teht3.Controllers
         {
             return await _repository.SubDoc(itemType);
         }
+
+        [HttpDelete]
+        [Route("players/{playerId}/items")]
+        public async Task<Player> PopAndIncrement(Guid playerId, Guid itemId, int score)
+        {
+            return await _repository.PopAndIncrement(playerId, itemId, score);
+        }
     }
 }

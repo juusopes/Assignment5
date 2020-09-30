@@ -171,8 +171,8 @@ public class MongoDbRepository : IRepository
     public Task<Player> PopAndIncrement(Guid playerId, Guid itemId, int score)
     {
         var pull = Builders<Player>.Update.PullFilter(p => p.itemList, i => i.itemId == itemId);
-        var inc = Builders<Player>.Update.Inc(p => p.Score, score);
-        var update = Builders<Player>.Update.Combine(pull, inc);
+        var increment = Builders<Player>.Update.Inc(p => p.Score, score);
+        var update = Builders<Player>.Update.Combine(pull, increment);
         var filter = Builders<Player>.Filter.Eq(p => p.Id, playerId);
 
         return _playerCollection.FindOneAndUpdateAsync(filter, update);
