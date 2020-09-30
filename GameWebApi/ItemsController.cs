@@ -18,6 +18,7 @@ namespace GameWebApi.Controllers
             _repository = repository;
         }
 
+
         [HttpGet]
         [Route("{itemId:Guid}")]
         public async Task<Item> GetItem(Guid playerId, Guid itemId)

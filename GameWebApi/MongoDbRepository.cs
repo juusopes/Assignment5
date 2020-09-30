@@ -159,6 +159,7 @@ public class MongoDbRepository : IRepository
         return await _playerCollection.Find(playersWithWeapons).ToListAsync();
     }
 
+
     public async Task<List<Player>> Sorting()
     {
         SortDefinition<Player> sortDef = Builders<Player>.Sort.Ascending("Score");
